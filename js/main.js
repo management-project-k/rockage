@@ -1,4 +1,4 @@
-// YOUR ORIGINAL IMAGE SLIDER - UNCHANGED
+// Image Slider
 document.addEventListener('DOMContentLoaded', function() {
     const sliders = document.querySelectorAll('.product-image-slider');
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartBadge();
 });
 
-// CART FUNCTIONALITY - NEW ADDITION
+// Cart Management with localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function addToCart(id, name, price, image) {
@@ -40,7 +40,7 @@ function addToCart(id, name, price, image) {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartBadge();
     
-    // Show success feedback
+    // Visual feedback
     event.target.textContent = '✓ Added!';
     event.target.style.backgroundColor = '#27ae60';
     setTimeout(() => {
@@ -52,8 +52,10 @@ function addToCart(id, name, price, image) {
 function updateCartBadge() {
     const count = cart.reduce((total, item) => total + item.quantity, 0);
     const badge = document.getElementById('cart-count');
-    badge.textContent = count;
-    badge.style.display = count > 0 ? 'inline-block' : 'none';
+    if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
 }
 
 function openCart() {
@@ -141,7 +143,7 @@ function checkout() {
     alert(`Total: ₹${total}\nCheckout coming soon!`);
 }
 
-// Close modal when clicking outside
+// Close modal on outside click
 window.onclick = function(event) {
     const modal = document.getElementById('cartModal');
     if (event.target == modal) {
