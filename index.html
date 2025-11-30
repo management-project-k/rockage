@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rockage - Wear Your Attitude</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&family=Roboto:wght@400;700&family=Teko:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header class="site-header-main">
         <div class="header-container">
             <a href="/" class="header-brand">
-                <img src="images/logo.png" alt="ROCKAGE Logo" class="header-logo">
+                <img src="/images/logo.png" alt="ROCKAGE Logo" class="header-logo">
             </a>
             
             <nav class="header-nav">
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
                 </ul>
             </nav>
             
@@ -34,7 +39,7 @@
     </header>
 
     <main>
-        <section id="home" class="hero">
+        <section class="hero">
             <div class="container">
                 <h1>Rockage</h1>
                 <p class="banner-powered-by">powered by <strong>dreamxstore</strong></p>
@@ -45,14 +50,14 @@
             </div>
         </section>
 
-        <section id="products" class="products">
+        <section class="products">
             <div class="container">
                 <h2>Our Collection</h2>
                 <div class="product-grid">
                     
                     <div class="product-card">
-                        <div class="product-image-slider" data-images='["images/legend_dragon_1.jpg","images/legend_dragon_2.jpg","images/legend_dragon_3.jpg"]'>
-                            <img src="images/legend_dragon_1.jpg" alt="LEGEND OF THE DRAGON">
+                        <div class="product-image-slider" data-images='["/images/legend_dragon_1.jpg","/images/legend_dragon_2.jpg","/images/legend_dragon_3.jpg"]'>
+                            <img src="/images/legend_dragon_1.jpg" alt="LEGEND OF THE DRAGON">
                         </div>
                         <div class="product-card-content">
                             <h3>LEGEND OF THE DRAGON</h3>
@@ -60,13 +65,13 @@
                                 <span class="current-price">₹499</span>
                                 <span class="original-price">₹1399</span>
                             </div>
-                            <span class="btn" onclick="addToCart('legend-dragon', 'LEGEND OF THE DRAGON', 499, 'images/legend_dragon_1.jpg')">Add to Cart</span>
+                            <span class="btn" onclick="addToCart('legend-dragon', 'LEGEND OF THE DRAGON', 499, '/images/legend_dragon_1.jpg')">Add to Cart</span>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image-slider" data-images='["images/honor_bound_1.jpg","images/honor_bound_2.jpg","images/honor_bound_3.jpg"]'>
-                            <img src="images/honor_bound_1.jpg" alt="HONOR BOUND">
+                        <div class="product-image-slider" data-images='["/images/honor_bound_1.jpg","/images/honor_bound_2.jpg","/images/honor_bound_3.jpg"]'>
+                            <img src="/images/honor_bound_1.jpg" alt="HONOR BOUND">
                         </div>
                         <div class="product-card-content">
                             <h3>HONOR BOUND</h3>
@@ -74,13 +79,13 @@
                                 <span class="current-price">₹499</span>
                                 <span class="original-price">₹1399</span>
                             </div>
-                            <span class="btn" onclick="addToCart('honor-bound', 'HONOR BOUND', 499, 'images/honor_bound_1.jpg')">Add to Cart</span>
+                            <span class="btn" onclick="addToCart('honor-bound', 'HONOR BOUND', 499, '/images/honor_bound_1.jpg')">Add to Cart</span>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image-slider" data-images='["images/fandom_1.jpg","images/fandom_2.jpg","images/fandom_3.jpg"]'>
-                            <img src="images/fandom_1.jpg" alt="FANDOM">
+                        <div class="product-image-slider" data-images='["/images/fandom_1.jpg","/images/fandom_2.jpg","/images/fandom_3.jpg"]'>
+                            <img src="/images/fandom_1.jpg" alt="FANDOM">
                         </div>
                         <div class="product-card-content">
                             <h3>FANDOM</h3>
@@ -88,13 +93,13 @@
                                 <span class="current-price">₹499</span>
                                 <span class="original-price">₹1399</span>
                             </div>
-                            <span class="btn" onclick="addToCart('fandom', 'FANDOM', 499, 'images/fandom_1.jpg')">Add to Cart</span>
+                            <span class="btn" onclick="addToCart('fandom', 'FANDOM', 499, '/images/fandom_1.jpg')">Add to Cart</span>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <div class="product-image-slider" data-images='["images/genjutsu_1.jpg","images/genjutsu_2.jpg","images/genjutsu_3.jpg"]'>
-                            <img src="images/genjutsu_1.jpg" alt="GENJUTSU">
+                        <div class="product-image-slider" data-images='["/images/genjutsu_1.jpg","/images/genjutsu_2.jpg","/images/genjutsu_3.jpg"]'>
+                            <img src="/images/genjutsu_1.jpg" alt="GENJUTSU">
                         </div>
                         <div class="product-card-content">
                             <h3>GENJUTSU</h3>
@@ -102,18 +107,11 @@
                                 <span class="current-price">₹499</span>
                                 <span class="original-price">₹1399</span>
                             </div>
-                            <span class="btn" onclick="addToCart('genjutsu', 'GENJUTSU', 499, 'images/genjutsu_1.jpg')">Add to Cart</span>
+                            <span class="btn" onclick="addToCart('genjutsu', 'GENJUTSU', 499, '/images/genjutsu_1.jpg')">Add to Cart</span>
                         </div>
                     </div>
                     
                 </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2>Contact Us</h2>
-                <p>Get in touch with us!</p>
             </div>
         </section>
     </main>
@@ -128,9 +126,10 @@
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Shop</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
                 </ul>
             </div>
             
@@ -164,6 +163,6 @@
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
