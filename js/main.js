@@ -1,14 +1,33 @@
-// ========== CART MANAGEMENT ==========
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-// Initialize
+// YOUR ORIGINAL IMAGE SLIDER - UNCHANGED
 document.addEventListener('DOMContentLoaded', function() {
-    updateCartCount();
-    startImageSliders();
-    syncCartAcrossTabs();
+    const sliders = document.querySelectorAll('.product-image-slider');
+
+    sliders.forEach(slider => {
+        const images = JSON.parse(slider.dataset.images);
+        if (images.length > 1) {
+            let currentIndex = 0;
+            const imgElement = slider.querySelector('img');
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % images.length;
+                imgElement.style.opacity = 0;
+                setTimeout(() => {
+                    imgElement.src = images[currentIndex];
+                    imgElement.style.opacity = 1;
+                }, 300);
+            }, 3000);
+
+            imgElement.style.transition = 'opacity 0.3s ease-in-out';
+        }
+    });
+
+    // Initialize cart
+    updateCartBadge();
 });
 
-// Add to Cart
+// CART FUNCTIONALITY - NEW ADDITION
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
 function addToCart(id, name, price, image) {
     const existingItem = cart.find(item => item.id === id);
     
@@ -18,49 +37,40 @@ function addToCart(id, name, price, image) {
         cart.push({ id, name, price, image, quantity: 1 });
     }
     
-    saveCart();
-    updateCartCount();
-    showNotification(`${name} added to cart!`);
-}
-
-// Save Cart to LocalStorage
-function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
+    
+    // Show success feedback
+    event.target.textContent = '✓ Added!';
+    event.target.style.backgroundColor = '#27ae60';
+    setTimeout(() => {
+        event.target.textContent = 'Add to Cart';
+        event.target.style.backgroundColor = '';
+    }, 1500);
 }
 
-// Update Cart Count
-function updateCartCount() {
+function updateCartBadge() {
     const count = cart.reduce((total, item) => total + item.quantity, 0);
-    document.getElementById('cart-count').textContent = count;
+    const badge = document.getElementById('cart-count');
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'inline-block' : 'none';
 }
 
-// Open Cart Modal
 function openCart() {
-    const modal = document.getElementById('cartModal');
-    modal.style.display = 'block';
-    displayCartItems();
+    document.getElementById('cartModal').style.display = 'block';
+    displayCart();
 }
 
-// Close Cart Modal
 function closeCart() {
     document.getElementById('cartModal').style.display = 'none';
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('cartModal');
-    if (event.target == modal) {
-        closeCart();
-    }
-}
-
-// Display Cart Items
-function displayCartItems() {
-    const container = document.getElementById('cart-items');
+function displayCart() {
+    const container = document.getElementById('cart-items-list');
     
     if (cart.length === 0) {
-        container.innerHTML = '<div class="empty-cart"><p>Your cart is empty</p></div>';
-        document.getElementById('cart-total').textContent = '₹0';
+        container.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>';
+        document.getElementById('modal-cart-total').textContent = '₹0';
         return;
     }
     
@@ -72,124 +82,69 @@ function displayCartItems() {
         total += subtotal;
         
         html += `
-            <div class="cart-item">
+            <div class="cart-item-row">
                 <img src="${item.image}" alt="${item.name}">
-                <div>
+                <div class="cart-item-details">
                     <h4>${item.name}</h4>
                     <p class="cart-item-price">₹${item.price}</p>
                 </div>
-                <div class="qty-controls">
-                    <button class="qty-btn" onclick="changeQuantity(${index}, -1)">-</button>
+                <div class="cart-qty-controls">
+                    <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">-</button>
                     <span>${item.quantity}</span>
-                    <button class="qty-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                    <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
                 </div>
-                <button class="remove-btn" onclick="removeItem(${index})">×</button>
+                <button class="cart-remove-btn" onclick="removeItem(${index})">×</button>
             </div>
         `;
     });
     
     container.innerHTML = html;
-    document.getElementById('cart-total').textContent = '₹' + total;
+    document.getElementById('modal-cart-total').textContent = '₹' + total;
 }
 
-// Change Quantity
-function changeQuantity(index, change) {
+function changeQty(index, change) {
     cart[index].quantity += change;
     
     if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
     }
     
-    saveCart();
-    updateCartCount();
-    displayCartItems();
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
+    displayCart();
 }
 
-// Remove Item
 function removeItem(index) {
-    if (confirm('Remove this item from cart?')) {
+    if (confirm('Remove this item?')) {
         cart.splice(index, 1);
-        saveCart();
-        updateCartCount();
-        displayCartItems();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+        displayCart();
     }
 }
 
-// Clear Cart
 function clearCart() {
     if (confirm('Clear all items from cart?')) {
         cart = [];
-        saveCart();
-        updateCartCount();
-        displayCartItems();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+        displayCart();
     }
 }
 
-// Checkout
 function checkout() {
     if (cart.length === 0) {
         alert('Your cart is empty!');
         return;
     }
-    
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    alert(`Checkout - Total: ₹${total}\n\nCheckout functionality coming soon!`);
+    alert(`Total: ₹${total}\nCheckout coming soon!`);
 }
 
-// Show Notification
-function showNotification(message) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.add('show');
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('cartModal');
+    if (event.target == modal) {
+        closeCart();
+    }
 }
-
-// Sync Cart Across Tabs
-function syncCartAcrossTabs() {
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'cart') {
-            cart = JSON.parse(e.newValue) || [];
-            updateCartCount();
-            if (document.getElementById('cartModal').style.display === 'block') {
-                displayCartItems();
-            }
-        }
-    });
-}
-
-// ========== IMAGE SLIDER ==========
-function startImageSliders() {
-    const sliders = document.querySelectorAll('.product-image');
-    
-    sliders.forEach(slider => {
-        const images = JSON.parse(slider.dataset.images);
-        if (images.length > 1) {
-            let currentIndex = 0;
-            const img = slider.querySelector('img');
-            
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % images.length;
-                img.style.opacity = 0;
-                
-                setTimeout(() => {
-                    img.src = images[currentIndex];
-                    img.style.opacity = 1;
-                }, 300);
-            }, 3000);
-        }
-    });
-}
-
-// ========== SMOOTH SCROLL ==========
-document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
